@@ -17,11 +17,14 @@ def get_stock():
                 "sector": info.get("sector")
             }
         elif report == "income":
-            results[symbol] = ticker.financials.to_dict()
+            df = ticker.financials
+            results[symbol] = {str(k): v for k, v in df.to_dict().items()}
         elif report == "balance":
-            results[symbol] = ticker.balance_sheet.to_dict()
+            df = ticker.balance_sheet
+            results[symbol] = {str(k): v for k, v in df.to_dict().items()}
         elif report == "cashflow":
-            results[symbol] = ticker.cashflow.to_dict()
+            df = ticker.cashflow
+            results[symbol] = {str(k): v for k, v in df.to_dict().items()}
         else:
             results[symbol] = {"error": "Invalid report type"}
     return jsonify(results)
